@@ -1,18 +1,18 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { Slot, Stack } from 'expo-router';
-const RootLayout = () => {
+import React from 'react';
+
+const ProfileTab = () => {
 	return (
-		<Stack>
-			<Stack.Screen name="profile" options={{ headerShown: false }} />
-		</Stack>
+		<View className="flex-1 items-center justify-center bg-white">
+			<Text className="text-3xl">ProfileTab</Text>
+		</View>
 	);
 };
 
-export default RootLayout;
+export default ProfileTab;
 
 // const styles = StyleSheet.create({
 // 	container: {
-// 		display: 'flex',
 // 		flex: 1,
 // 		alignItems: 'center',
 // 		justifyContent: 'center',
