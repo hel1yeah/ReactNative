@@ -26,4 +26,6 @@ export default {
 	logout,
 	eyeHide,
 	eye,
+} as {
+	[key: string]: string;
 };

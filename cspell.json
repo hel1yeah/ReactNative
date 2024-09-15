@@ -3,7 +3,13 @@
 	"ignorePaths": [],
 	"dictionaryDefinitions": [],
 	"dictionaries": [],
-	"words": ["aora"],
-	"ignoreWords": ["Ionicons"],
+	"words": [
+		"aora",
+		"pregular",
+		"pthin"
+	],
+	"ignoreWords": [
+		"Ionicons"
+	],
 	"import": []
 }
