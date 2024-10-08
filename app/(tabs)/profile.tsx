@@ -4,9 +4,9 @@ import React from 'react';
 
 const TheProfileTab = () => {
 	return (
-		<View>
+		<View className="flex-1 items-center justify-center bg-white">
 			<Text>sdsdsdsd!</Text>
-			<Link href="/profile">
+			<Link href="/home">
 				<Text>Go to home screen!</Text>
 			</Link>
 		</View>
