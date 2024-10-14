@@ -13,13 +13,15 @@
 			"backgroundColor": "#ffffff"
 		},
 		"ios": {
-			"supportsTablet": true
+			"supportsTablet": true,
+			"package": "com.packagehel1yeah.aoraapp"
 		},
 		"android": {
 			"adaptiveIcon": {
 				"foregroundImage": "./assets/adaptive-icon.png",
 				"backgroundColor": "#ffffff"
-			}
+			},
+			"package": "com.packagehel1yeah.aoraapp"
 		},
 		"web": {
 			"bundler": "metro",
