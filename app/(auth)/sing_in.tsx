@@ -29,11 +29,14 @@ const TheSingIn = () => {
 		<SafeAreaView className="bg-primary h-full">
 			<ScrollView>
 				<View className="w-full h-full min-h-[70vh] justify-center px-4 my-6">
-					<Image
-						source={images.logo}
-						resizeMode="contain"
-						className="w-[115px] h-[35px]"
-					/>
+					<Link href="/">
+						<Image
+							source={images.logo}
+							resizeMode="contain"
+							className="w-[115px] h-[35px]"
+						/>
+					</Link>
+
 					<Text className="text-2xl text-white text-semibold mt-10">
 						Log In to Aora
 					</Text>

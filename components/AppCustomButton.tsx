@@ -27,7 +27,7 @@ const AppCustomButton: React.FC<AppCustomButtonProps> = ({
 		<TouchableOpacity
 			onPress={handlePress}
 			activeOpacity={0.8}
-			className={`bg-secondary-100 rounded-xl min-h-[48px] min-w-[80px] max-w-sm justify-center items-center w-full p-3 w-max-[500px] ${containerStyle} ${
+			className={`bg-secondary-100 rounded-xl min-h-[48px] min-w-[80px] max-w-xxl justify-center items-center w-full p-3 ${containerStyle} ${
 				isLoading ? 'opacity-50' : ''
 			}`}
 			disabled={isLoading}
