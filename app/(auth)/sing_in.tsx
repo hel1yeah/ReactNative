@@ -1,14 +1,16 @@
 import React from 'react';
-import { View, Text, ScrollView, Image } from 'react-native';
+import { View, Text, ScrollView, Image, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 
 import { useState } from 'react';
 
 import { images } from '@/constants';
 import { AppFormFieldEnum } from '@/constants/Enums/AppFormFieldEnum';
+import { signIn } from '@/lib/appwrite';
 import AppFormField from '@/components/AppFormField';
 import AppCustomButton from '@/components/AppCustomButton';
+import { useGlobalContext } from '@/context/GlobalProvider';
 
 const TheSingIn = () => {
 	interface FormData {
@@ -17,19 +19,43 @@ const TheSingIn = () => {
 	}
 
 	const [form, setForm] = useState<FormData>({ email: '', password: '' });
-
+	const { setUser, setIsLoggetIn } = useGlobalContext();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
-	function handleSingIn() {
+	async function handleSingIn() {
+		if (!form.email || !form.password) {
+			Alert.alert('Error', 'Please fill in all fields');
+		}
+
 		setIsSubmitting(true);
-		console.log('asASD');
+
+		try {
+			const res = await signIn(form.email, form.password);
+
+			setUser(res);
+			setIsLoggetIn(true);
+
+			router.replace('/home');
+		} catch (error: any) {
+			console.log(error);
+
+			Alert.alert('Error', error.message);
+		} finally {
+			setIsSubmitting(false);
+		}
+
+		// registerUser();
+		// setIsSubmitting(false);
 	}
 
 	return (
 		<SafeAreaView className="bg-primary h-full">
 			<ScrollView>
 				<View className="w-full h-full min-h-[70vh] justify-center px-4 my-6">
-					<Link href="/">
+					<Link
+						href="/"
+						className="w-[115px] h-[45px] justify-center items-center"
+					>
 						<Image
 							source={images.logo}
 							resizeMode="contain"

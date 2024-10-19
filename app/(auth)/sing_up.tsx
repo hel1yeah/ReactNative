@@ -15,6 +15,7 @@ import { Link, router } from 'expo-router';
 // 	storageId: '670d316c0028dc92ed2c',
 // };
 
+import { useGlobalContext } from '@/context/GlobalProvider';
 import { useState } from 'react';
 
 import { images } from '@/constants';
@@ -36,7 +37,7 @@ const TheSingUp = () => {
 		email: '',
 		password: '',
 	});
-
+	const { setUser, setIsLoggetIn } = useGlobalContext();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	async function handleSingUp() {
@@ -49,9 +50,8 @@ const TheSingUp = () => {
 		try {
 			const res = await registerUser(form.email, form.password, form.userName);
 
-			console.log(res);
-
-			//set global state here
+			setUser(res);
+			setIsLoggetIn(true);
 
 			router.replace('/home');
 		} catch (error: any) {

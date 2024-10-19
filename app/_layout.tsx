@@ -3,6 +3,7 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
+import GlobalProvider from '@/context/GlobalProvider';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -43,12 +44,14 @@ export default function RootLayout() {
 	}
 
 	return (
-		<Stack>
-			<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-			<Stack.Screen name="(auth)" options={{ headerShown: false }} />
-			{/* <Stack.Screen name="/search/[query]" options={{ headerShown: false }} /> */}
-			<Stack.Screen name="+not-found" />
-			<Stack.Screen name="index" options={{ headerShown: false }} />
-		</Stack>
+		<GlobalProvider>
+			<Stack>
+				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+				<Stack.Screen name="(auth)" options={{ headerShown: false }} />
+				{/* <Stack.Screen name="/search/[query]" options={{ headerShown: false }} /> */}
+				<Stack.Screen name="+not-found" />
+				<Stack.Screen name="index" options={{ headerShown: false }} />
+			</Stack>
+		</GlobalProvider>
 	);
 }

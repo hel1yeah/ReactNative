@@ -1,5 +1,6 @@
 import { Link, Stack, Redirect, router } from 'expo-router';
 import { View, Image, ScrollView, Text } from 'react-native';
+import { useGlobalContext } from '@/context/GlobalProvider';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -9,6 +10,14 @@ import images from '../constants/images';
 
 import React from 'react';
 export default function App() {
+	const { isLoading, isLoggetIn } = useGlobalContext();
+
+	console.log('isLoading', isLoading, 'isLoggetIn', isLoggetIn);
+
+	if (!isLoading && isLoggetIn) {
+		return <Redirect href="/home" />;
+	}
+
 	return (
 		<SafeAreaView className="bg-primary h-full">
 			<ScrollView contentContainerStyle={{ height: '100%' }}>

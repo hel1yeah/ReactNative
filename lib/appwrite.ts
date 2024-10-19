@@ -6,6 +6,7 @@ import {
 	ID,
 	Query,
 	Storage,
+	ImageGravity,
 } from 'react-native-appwrite';
 
 export const config = {
@@ -81,7 +82,6 @@ export async function signIn(email: string, password: string) {
 export async function getAccount() {
 	try {
 		const currentAccount = await account.get();
-
 		return currentAccount;
 	} catch (error: any) {
 		throw new Error(error);
@@ -154,7 +154,7 @@ export async function getFilePreview(fileId: string, type: string) {
 				fileId,
 				2000,
 				2000,
-				'top',
+				ImageGravity.Top,
 				100
 			);
 		} else {
