@@ -42,12 +42,9 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
 		getCurrentUser()
 			.then((result) => {
 				if (result) {
-					console.log('User: result', result);
 					setIsLoggetIn(true);
 					setUser(result);
-					console.log(1);
 				} else {
-					console.log(2);
 					setIsLoggetIn(false);
 					setUser(null);
 				}

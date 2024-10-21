@@ -9,6 +9,8 @@ import {
 	ImageGravity,
 } from 'react-native-appwrite';
 
+import { IPost } from '@/interface/IPosts';
+
 export const config = {
 	endpoint: 'https://cloud.appwrite.io/v1',
 	platform: 'com.packagehel1yeah.aoraapp',
@@ -18,6 +20,16 @@ export const config = {
 	videosCollectionId: '670d0eec001a7012a346',
 	storageId: '670d316c0028dc92ed2c',
 };
+
+const {
+	endpoint,
+	platform,
+	projectId,
+	databaseId,
+	usersCollectionId,
+	videosCollectionId,
+	storageId,
+} = config;
 
 const client = new Client();
 
@@ -38,10 +50,12 @@ export async function registerUser(
 	username: string
 ) {
 	try {
-		const userId = (ID.unique() + ID.unique()).slice(0, 36);
-		console.log('Generated userId:', userId, userId.length);
-
-		const newAccount = await account.create(userId, email, password, username);
+		const newAccount = await account.create(
+			ID.unique(),
+			email,
+			password,
+			username
+		);
 
 		if (!newAccount) throw Error;
 
@@ -50,8 +64,8 @@ export async function registerUser(
 		await signIn(email, password);
 
 		const newUser = await databases.createDocument(
-			config.databaseId,
-			config.usersCollectionId,
+			databaseId,
+			usersCollectionId,
 			ID.unique(),
 			{
 				accountId: newAccount.$id,
@@ -71,7 +85,6 @@ export async function registerUser(
 export async function signIn(email: string, password: string) {
 	try {
 		const session = await account.createEmailPasswordSession(email, password);
-
 		return session;
 	} catch (error: any) {
 		throw new Error(error);
@@ -178,8 +191,8 @@ export async function createVideoPost(form: any) {
 		]);
 
 		const newPost = await databases.createDocument(
-			config.databaseId,
-			config.videosCollectionId,
+			databaseId,
+			videosCollectionId,
 			ID.unique(),
 			{
 				title: form.title,
@@ -197,13 +210,11 @@ export async function createVideoPost(form: any) {
 }
 
 // Get all video Posts
-export async function getAllPosts() {
+export async function getAllPosts(): Promise<IPost[]> {
 	try {
-		const posts = await databases.listDocuments(
-			config.databaseId,
-			config.videosCollectionId
-		);
+		const posts = await databases.listDocuments(databaseId, videosCollectionId);
 
+		// @ts-ignore
 		return posts.documents;
 	} catch (error: any) {
 		throw new Error(error);
@@ -214,8 +225,8 @@ export async function getAllPosts() {
 export async function getUserPosts(userId: string) {
 	try {
 		const posts = await databases.listDocuments(
-			config.databaseId,
-			config.videosCollectionId,
+			databaseId,
+			videosCollectionId,
 			[Query.equal('creator', userId)]
 		);
 
@@ -243,14 +254,14 @@ export async function searchPosts(query: string) {
 }
 
 // Get latest created video posts
-export async function getLatestPosts() {
+export async function getLatestPosts(): Promise<IPost[]> {
 	try {
 		const posts = await databases.listDocuments(
 			config.databaseId,
 			config.videosCollectionId,
 			[Query.orderDesc('$createdAt'), Query.limit(7)]
 		);
-
+		// @ts-ignore
 		return posts.documents;
 	} catch (error: any) {
 		throw new Error(error);

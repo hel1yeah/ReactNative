@@ -7,4 +7,5 @@ export enum AppFormFieldEnum {
 	SELECT = 'Select',
 	CHECKBOX = 'Checkbox',
 	RADIO = 'Radio',
+	SEARCH = 'Search',
 }
