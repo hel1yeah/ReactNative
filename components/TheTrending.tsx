@@ -7,8 +7,9 @@ import {
 	ImageBackground,
 	Image,
 } from 'react-native';
+import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
 import React from 'react';
-import { FC, useState } from 'react';
+import { FC, useState, useRef } from 'react';
 import * as Animatable from 'react-native-animatable';
 
 import { IPost } from '@/interface/IPosts';
@@ -28,7 +29,7 @@ const zoomIn = {
 		scale: 0.9,
 	},
 	1: {
-		scale: 1.1,
+		scale: 1,
 	},
 };
 const zoomOut = {
@@ -36,13 +37,8 @@ const zoomOut = {
 		scale: 1,
 	},
 	1: {
-		scale: 0.9,
+		scale: 0.8,
 	},
-};
-
-const customAnimation = {
-	0: { scale: 0.5 },
-	1: { scale: 1 },
 };
 
 const TrendingItem: FC<ITrendingItem> = ({ activeItemId, item }) => {
@@ -53,11 +49,21 @@ const TrendingItem: FC<ITrendingItem> = ({ activeItemId, item }) => {
 	return (
 		<Animatable.View
 			className="mr-5"
-			animation={activeItemId === item.$id ? zoomIn : zoomOut}
+			// @ts-ignore
+			animation={activeItemId === item?.$id ? zoomIn : zoomOut}
 			duration={500}
 		>
 			{play ? (
-				<Text className="text-white">Playing</Text>
+				<Video
+					source={{ uri: item.video }}
+					className="w-52 h-72 rounded-[35px] mt-3 bg-white/10"
+					resizeMode={ResizeMode.CONTAIN}
+					useNativeControls
+					shouldPlay
+					onPlaybackStatusUpdate={(status: AVPlaybackStatus) => {
+						if (status.isLoaded && status.didJustFinish) setPlay(false);
+					}}
+				/>
 			) : (
 				<TouchableOpacity
 					className="relative justify-center items-center"
@@ -83,7 +89,7 @@ const TrendingItem: FC<ITrendingItem> = ({ activeItemId, item }) => {
 
 const TheTrending: React.FC<AppTheTrendingProps> = ({ posts = null }) => {
 	if (!posts) return null;
-	const [activeItemId, setActiveItemId] = useState(posts[0].$id);
+	const [activeItemId, setActiveItemId] = useState(posts[0]?.$id);
 
 	const viewableActiveItemChanged = ({
 		viewableItems,
@@ -94,19 +100,21 @@ const TheTrending: React.FC<AppTheTrendingProps> = ({ posts = null }) => {
 			setActiveItemId(viewableItems[0].key);
 		}
 	};
-
+	const viewabilityConfigCallbackPairs = useRef([
+		{
+			viewabilityConfig: { itemVisiblePercentThreshold: 80 },
+			onViewableItemsChanged: viewableActiveItemChanged,
+		},
+	]);
 	return (
 		<FlatList
 			data={posts}
-			keyExtractor={(item) => item.$id}
+			keyExtractor={(item) => item?.$id}
 			renderItem={({ item }) => (
 				<TrendingItem activeItemId={activeItemId} item={item} />
 			)}
-			onViewableItemsChanged={viewableActiveItemChanged}
-			viewabilityConfig={{
-				itemVisiblePercentThreshold: 70,
-			}}
-			contentOffset={{ x: 110, y: 0 }}
+			viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
+			contentOffset={{ x: 0, y: 0 }}
 			horizontal
 		/>
 	);
