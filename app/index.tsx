@@ -12,8 +12,6 @@ import React from 'react';
 export default function App() {
 	const { isLoading, isLoggetIn } = useGlobalContext();
 
-	console.log('isLoading', isLoading, 'isLoggetIn', isLoggetIn);
-
 	if (!isLoading && isLoggetIn) {
 		return <Redirect href="/home" />;
 	}

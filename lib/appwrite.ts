@@ -237,7 +237,7 @@ export async function getUserPosts(userId: string) {
 }
 
 // Get video posts that matches search query
-export async function searchPosts(query: string) {
+export async function searchPosts(query: string): Promise<IPost[]> {
 	try {
 		const posts = await databases.listDocuments(
 			config.databaseId,
@@ -246,7 +246,7 @@ export async function searchPosts(query: string) {
 		);
 
 		if (!posts) throw new Error('Something went wrong');
-
+		// @ts-ignore
 		return posts.documents;
 	} catch (error: any) {
 		throw new Error(error);
