@@ -3,8 +3,8 @@ import { useLocalSearchParams } from 'expo-router';
 import { View, Text, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import useAppwrite from '../../lib/useAppwrite';
-import { searchPosts } from '../../lib/appwrite';
+import useAppwrite from '@/lib/useAppwrite';
+import { searchPosts } from '@/lib/appwrite';
 import AppEmptyState from '@/components/AppEmptyState';
 import TheSearchInput from '@/components/TheSearchInput';
 import AppVideoCard from '@/components/AppVideoCard';

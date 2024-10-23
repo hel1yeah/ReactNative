@@ -16,20 +16,26 @@ import TheSearchInput from '@/components/TheSearchInput';
 import TheTrending from '@/components/TheTrending';
 import AppVideoCard from '@/components/AppVideoCard';
 import AppEmptyState from '@/components/AppEmptyState';
+import { useGlobalContext } from '@/context/GlobalProvider';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AppFormFieldEnum } from '@/constants/Enums/AppFormFieldEnum';
 import { images } from '@/constants';
 
 export default function HomeScreen() {
+	const { user } = useGlobalContext();
 	const { data: posts, loading, refetch } = useAppwrite<IPost[]>(getAllPosts);
-	const { data: latestPosts, loading: latestLoading } =
-		useAppwrite<IPost[]>(getLatestPosts);
+	const {
+		data: latestPosts,
+		refetch: refetchLatest,
+		loading: latestLoading,
+	} = useAppwrite<IPost[]>(getLatestPosts);
 
 	const [refreshing, setRefreshing] = useState<boolean>(false);
 
 	async function onRefresh() {
 		setRefreshing(true);
 		await refetch();
+		await refetchLatest();
 		setRefreshing(false);
 	}
 
@@ -43,8 +49,8 @@ export default function HomeScreen() {
 						title={item.title}
 						thumbnail={item.thumbnail}
 						video={item.video}
-						creator={item?.creator ? item?.creator[0]?.username : undefined}
-						avatar={item?.creator ? item?.creator[0]?.avatar : undefined}
+						creator={item?.creator ? item?.creator?.username : undefined}
+						avatar={item?.creator ? item?.creator.avatar : undefined}
 					/>
 				)}
 				ListHeaderComponent={() => (
@@ -55,10 +61,9 @@ export default function HomeScreen() {
 									Welcome back
 								</Text>
 								<Text className="text-2xl font-psemibold text-white">
-									My god
+									{user?.username}
 								</Text>
 							</View>
-
 							<View className="mt-1.5">
 								<Image
 									source={images.logoSmall}

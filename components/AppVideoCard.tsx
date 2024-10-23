@@ -31,10 +31,10 @@ const AppVideoCard: React.FC<AppVideoCardProps> = ({
 			<View className="flex flex-row gap-3 items-start">
 				<View className="flex justify-center items-center flex-row flex-1">
 					{avatar ? (
-						<View className="w-[46px] h-[46px] rounded-lg border border-secondary flex justify-center items-center p-0.5">
+						<View className="w-[46px] h-[46px] rounded-md border border-secondary flex justify-center items-center">
 							<Image
 								source={{ uri: avatar }}
-								className="w-full h-full rounded-lg"
+								className="w-[90%] h-[90%] rounded-[3px]"
 								resizeMode="cover"
 							/>
 						</View>

@@ -7,7 +7,7 @@ export interface IPost {
 		$id: string;
 		username: string;
 		avatar: string;
-	}[];
+	};
 	title: string;
 	content: string;
 }

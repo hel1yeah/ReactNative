@@ -9,6 +9,7 @@ import {
 	ImageGravity,
 } from 'react-native-appwrite';
 
+import * as ImagePicker from 'expo-image-picker';
 import { IPost } from '@/interface/IPosts';
 
 export const config = {
@@ -127,6 +128,8 @@ export async function signOut() {
 	try {
 		const session = await account.deleteSession('current');
 
+		console.log(session);
+
 		return session;
 	} catch (error: any) {
 		throw new Error(error);
@@ -134,11 +137,18 @@ export async function signOut() {
 }
 
 // Upload File
-export async function uploadFile(file: any, type: string) {
+export async function uploadFile(
+	file: ImagePicker.ImagePickerAsset,
+	type: string
+) {
 	if (!file) return;
 
-	const { mimeType, ...rest } = file;
-	const asset = { type: mimeType, ...rest };
+	const asset = {
+		name: file.fileName as string,
+		type: file.mimeType as string,
+		size: file.fileSize as number,
+		uri: file.uri as string,
+	};
 
 	try {
 		const uploadedFile = await storage.createFile(
@@ -198,7 +208,7 @@ export async function createVideoPost(form: any) {
 				title: form.title,
 				thumbnail: thumbnailUrl,
 				video: videoUrl,
-				prompt: form.prompt,
+				promt: form.prompt,
 				creator: form.userId,
 			}
 		);
@@ -222,14 +232,14 @@ export async function getAllPosts(): Promise<IPost[]> {
 }
 
 // Get video posts created by user
-export async function getUserPosts(userId: string) {
+export async function getUserPosts(userId: string): Promise<IPost[]> {
 	try {
 		const posts = await databases.listDocuments(
 			databaseId,
 			videosCollectionId,
 			[Query.equal('creator', userId)]
 		);
-
+		// @ts-ignore
 		return posts.documents;
 	} catch (error: any) {
 		throw new Error(error);

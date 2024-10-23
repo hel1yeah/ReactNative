@@ -14,9 +14,12 @@ const useAppwrite = <T>(fn: AsyncFunction<T>) => {
 			if (res) {
 				setData(res);
 			} else {
+				console.log(res);
+
 				Alert.alert('Error', 'No document found');
 			}
 		} catch (error: any) {
+			console.log(error);
 			Alert.alert('Error', error.message);
 		} finally {
 			setLoading(false);
