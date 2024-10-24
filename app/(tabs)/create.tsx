@@ -123,7 +123,7 @@ const TheCreate = () => {
 	return (
 		<SafeAreaView className="bg-primary h-full">
 			<ScrollView className="px-4 my-6">
-				<Text className="text-2xl font-psemibold text-white">Upload Video</Text>
+				<Text className="text-4xl font-psemibold text-white">Upload Video</Text>
 
 				<AppFormField
 					title={AppFormFieldEnum.VIDEO}

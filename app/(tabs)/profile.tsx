@@ -1,5 +1,12 @@
 import { router } from 'expo-router';
-import { View, Text, FlatList, TouchableOpacity, Image } from 'react-native';
+import {
+	View,
+	Text,
+	FlatList,
+	TouchableOpacity,
+	Image,
+	ActivityIndicator,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import useAppwrite from '@/lib/useAppwrite';
@@ -45,16 +52,20 @@ export default function TheProfileTab() {
 				)}
 				ListHeaderComponent={() => (
 					<View className="w-full justify-center items-center mt-3 mb-8 px-4">
-						<TouchableOpacity
-							className="w-full items-end mb-4"
-							onPress={() => onLogOut()}
-						>
-							<Image
-								source={icons.logout}
-								className="w-7 h-7"
-								resizeMode="contain"
-							/>
-						</TouchableOpacity>
+						<View className="w-full items-end mb-4">
+							{isLoading ? (
+								<ActivityIndicator size="small" color="#FF9C01" />
+							) : (
+								<TouchableOpacity onPress={() => onLogOut()}>
+									<Image
+										source={icons.logout}
+										className="w-7 h-7"
+										resizeMode="contain"
+									/>
+								</TouchableOpacity>
+							)}
+						</View>
+
 						<View
 							className="w-16 
 							h-16
