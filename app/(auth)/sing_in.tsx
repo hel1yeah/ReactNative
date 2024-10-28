@@ -19,6 +19,7 @@ import { signIn } from '@/lib/appwrite';
 import AppFormField from '@/components/AppFormField';
 import AppCustomButton from '@/components/AppCustomButton';
 import { useGlobalContext } from '@/context/GlobalProvider';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const TheSingIn = () => {
 	interface FormData {
@@ -56,14 +57,10 @@ const TheSingIn = () => {
 		// registerUser();
 		// setIsSubmitting(false);
 	}
-
+	const keyboardVerticalOffset = 100;
 	return (
 		<SafeAreaView className="bg-primary h-full">
-			<KeyboardAvoidingView
-				className="bg-primary h-full flex-1"
-				behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-				// keyboardVerticalOffset={100}
-			>
+			<KeyboardAwareScrollView extraHeight={keyboardVerticalOffset}>
 				<ScrollView>
 					<View className="w-full h-full min-h-[70vh] justify-center px-4 my-6">
 						<Link
@@ -127,7 +124,7 @@ const TheSingIn = () => {
 						</View>
 					</View>
 				</ScrollView>
-			</KeyboardAvoidingView>
+			</KeyboardAwareScrollView>
 		</SafeAreaView>
 	);
 };

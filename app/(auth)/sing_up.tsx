@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link, router } from 'expo-router';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 // MyAppNameAora
 // com.packagehel1yeah.aoraapp
@@ -73,21 +74,17 @@ const TheSingUp = () => {
 		// registerUser();
 		// setIsSubmitting(false);
 	}
-	const keyboardVerticalOffset = Platform.OS === 'ios' ? 140 : 0;
-	const position = Platform.OS === 'ios' ? 'padding' : 'height';
+	const keyboardVerticalOffset = Platform.OS === 'ios' ? 100 : 150;
+	// const position = Platform.OS === 'ios' ? 'padding' : 'height';
 	return (
 		<SafeAreaView className="bg-primary h-full" style={{ flex: 1 }}>
-			<KeyboardAvoidingView
-				behavior={position}
-				keyboardVerticalOffset={keyboardVerticalOffset}
-				style={{ flex: 1 }}
-			>
+			<KeyboardAwareScrollView extraHeight={keyboardVerticalOffset}>
 				<ScrollView
 					contentContainerStyle={{ flexGrow: 1 }}
 					showsVerticalScrollIndicator={false}
 				>
 					<View className="w-full h-full min-h-[70vh] justify-center px-4 my-6">
-						<Link href="/">
+						<Link href="/" className="h-[48px] items-center justify-center">
 							<Image
 								source={images.logo}
 								resizeMode="contain"
@@ -157,7 +154,7 @@ const TheSingUp = () => {
 						</View>
 					</View>
 				</ScrollView>
-			</KeyboardAvoidingView>
+			</KeyboardAwareScrollView>
 		</SafeAreaView>
 	);
 };

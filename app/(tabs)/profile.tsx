@@ -22,7 +22,11 @@ import { icons } from '@/constants';
 export default function TheProfileTab() {
 	const { user, setUser, isLoading, setIsLoggetIn } = useGlobalContext();
 
-	const { data: posts, refetch } = useAppwrite(() => getUserPosts(user?.$id));
+	const {
+		data: posts,
+		loading,
+		refetch,
+	} = useAppwrite(() => getUserPosts(user?.$id));
 
 	// useEffect(() => {
 	// 	refetch();
@@ -101,10 +105,18 @@ export default function TheProfileTab() {
 					</View>
 				)}
 				ListEmptyComponent={() => (
-					<AppEmptyState
-						title="No Videos Found"
-						subtitle="No videos found for this search query"
-					/>
+					<View>
+						{loading ? (
+							<AppEmptyState
+								title="No Videos Found"
+								subtitle="No videos found for this search query"
+							/>
+						) : (
+							<View>
+								<ActivityIndicator size={72} color="#FF9C01" />
+							</View>
+						)}
+					</View>
 				)}
 			/>
 		</SafeAreaView>

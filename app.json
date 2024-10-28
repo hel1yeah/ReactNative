@@ -1,36 +1,44 @@
 {
-	"expo": {
-		"name": "NameReactNative",
-		"slug": "slug_react_native",
-		"version": "1.0.0",
-		"orientation": "portrait",
-		"icon": "./assets/icon.png",
-		"scheme": "SchemeExpoReactNative",
-		"userInterfaceStyle": "light",
-		"splash": {
-			"image": "./assets/splash.png",
-			"resizeMode": "contain",
-			"backgroundColor": "#ffffff"
-		},
-		"ios": {
-			"supportsTablet": true,
-			"package": "com.packagehel1yeah.aoraapp"
-		},
-		"android": {
-			"adaptiveIcon": {
-				"foregroundImage": "./assets/adaptive-icon.png",
-				"backgroundColor": "#ffffff"
-			},
-			"package": "com.packagehel1yeah.aoraapp"
-		},
-		"web": {
-			"bundler": "metro",
-			"output": "static",
-			"favicon": "./assets/splash.png"
-		},
-		"plugins": ["expo-router"],
-		"experiments": {
-			"typedRoutes": true
-		}
-	}
+  "expo": {
+    "name": "NameReactNative",
+    "slug": "slug_react_native",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "SchemeExpoReactNative",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "package": "com.packagehel1yeah.aoraapp",
+      "bundleIdentifier": "com.packagehel1yeah.aoraapp"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.packagehel1yeah.aoraapp"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/splash.png"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "6a0d4362-0130-49cd-b44d-d4fb5eb7d4cb"
+      }
+    }
+  }
 }

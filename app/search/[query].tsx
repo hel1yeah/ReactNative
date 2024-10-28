@@ -9,6 +9,8 @@ import AppEmptyState from '@/components/AppEmptyState';
 import TheSearchInput from '@/components/TheSearchInput';
 import AppVideoCard from '@/components/AppVideoCard';
 
+import { AppFormFieldEnum } from '@/constants/Enums/AppFormFieldEnum';
+
 const Search = () => {
 	const { query }: { query: string } = useLocalSearchParams();
 	const { data: posts, refetch } = useAppwrite(() => searchPosts(query));
@@ -41,7 +43,13 @@ const Search = () => {
 						</Text>
 
 						<View className="mt-6 mb-8">
-							<TheSearchInput initialQuery={query} />
+							<TheSearchInput
+								initialQuery={query}
+								title={AppFormFieldEnum.SEARCH}
+								value=""
+								placeholder="Search for videos"
+								handlerChangeText={() => {}}
+							/>
 						</View>
 					</View>
 				)}

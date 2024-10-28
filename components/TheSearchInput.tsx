@@ -7,7 +7,7 @@ import {
 	Image,
 	Alert,
 } from 'react-native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import React from 'react';
 
 import { icons } from '@/constants';
@@ -31,6 +31,23 @@ const TheSearchInput: React.FC<AppFormFieldProps> = ({ initialQuery }) => {
 	const pathname = usePathname();
 
 	const [query, setQuery] = useState(initialQuery || '');
+	const TIME_DELAY = 1000;
+	useEffect(() => {
+		console.log(query + 1);
+
+		const handler = setTimeout(() => {
+			console.log(query + 2);
+
+			if (query) {
+				console.log(query + 3);
+				onChecked();
+			} else {
+				console.log('No query');
+			}
+		}, TIME_DELAY);
+
+		return () => clearTimeout(handler);
+	}, [query]);
 
 	const onChecked = () => {
 		if (!query) {
@@ -40,8 +57,10 @@ const TheSearchInput: React.FC<AppFormFieldProps> = ({ initialQuery }) => {
 			);
 		}
 
-		if (pathname.startsWith('/search')) router.setParams({ query });
-		else router.push(`/search/${query}`);
+		if (pathname.startsWith('/search')) {
+			if (pathname !== `/search/${query}`) return router.setParams({ query });
+		} else router.push(`/search/${query}`);
+		return;
 	};
 	return (
 		<View className="border-2 border-black-500 w-full h-16 px-4 bg-black-100 rounded-2xl focus:border-secondary items-center flex-row space-x-4">
@@ -53,18 +72,7 @@ const TheSearchInput: React.FC<AppFormFieldProps> = ({ initialQuery }) => {
 				placeholderTextColor="#cdcde0"
 			/>
 
-			<TouchableOpacity
-				onPress={() => {
-					if (query === '')
-						return Alert.alert(
-							'Missing Query',
-							'Please input something to search results across database'
-						);
-
-					if (pathname.startsWith('/search')) router.setParams({ query });
-					else router.push(`/search/${query}`);
-				}}
-			>
+			<TouchableOpacity onPress={() => onChecked()}>
 				<Image source={icons.search} className="w-5 h-5" resizeMode="contain" />
 			</TouchableOpacity>
 		</View>

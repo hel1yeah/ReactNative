@@ -5,6 +5,7 @@ import {
 	Image,
 	RefreshControl,
 	Alert,
+	ActivityIndicator,
 } from 'react-native';
 import { useEffect, useState } from 'react';
 import { Link as Link } from 'expo-router';
@@ -83,22 +84,34 @@ export default function HomeScreen() {
 							<Text className="text-gray-100 tex-lg font-pregular mb-3">
 								Lates Videos
 							</Text>
-							{latestLoading && latestPosts ? (
+							{latestLoading ? (
+								<View className="flex items-center justify-center h-72">
+									<ActivityIndicator size={72} color="#FF9C01" />
+								</View>
+							) : latestPosts ? (
+								<TheTrending posts={latestPosts} />
+							) : (
 								<AppEmptyState
 									title="No videos found"
 									subtitle="Be first who one to upload video"
 								/>
-							) : (
-								<TheTrending posts={latestPosts || []} />
 							)}
 						</View>
 					</View>
 				)}
 				ListEmptyComponent={() => (
-					<AppEmptyState
-						title="No videos found"
-						subtitle="Be first who one to upload video"
-					/>
+					<View>
+						{loading ? (
+							<AppEmptyState
+								title="No Videos Found"
+								subtitle="No videos found for this search query"
+							/>
+						) : (
+							<View className="flex items-center justify-center h-72">
+								<ActivityIndicator size={72} color="#FF9C01" />
+							</View>
+						)}
+					</View>
 				)}
 				refreshControl={
 					<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

@@ -5,10 +5,11 @@ type AsyncFunction<T> = () => Promise<T | null>;
 
 const useAppwrite = <T>(fn: AsyncFunction<T>) => {
 	const [data, setData] = useState<T | null>(null);
-	const [loading, setLoading] = useState<boolean>(true);
+	const [loading, setLoading] = useState<boolean>(false);
 
 	const fetchData = async () => {
 		setLoading(true);
+		setData(null);
 		try {
 			const res = await fn();
 			if (res) {
