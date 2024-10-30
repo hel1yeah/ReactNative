@@ -88,7 +88,7 @@ export default function TheCreate() {
 	};
 
 	return (
-		<SafeAreaView className="bg-primary h-full">
+		<SafeAreaView className="bg-primary h-full" edges={['top']}>
 			<ScrollView className="px-4 my-6">
 				<Text className="text-2xl text-white font-psemibold">Upload Video</Text>
 

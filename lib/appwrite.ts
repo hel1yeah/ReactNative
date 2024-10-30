@@ -231,6 +231,61 @@ export async function getAllPosts(): Promise<IPost[]> {
 	}
 }
 
+// Get video posts liked by user
+export async function getLikedPosts(userId: string): Promise<IPost[]> {
+	try {
+		const posts = await databases.listDocuments(
+			databaseId,
+			videosCollectionId,
+			[Query.equal('liked', userId)]
+		);
+		console.log(posts);
+		// @ts-ignore
+
+		return posts.documents;
+	} catch (error: any) {
+		throw new Error(error);
+	}
+}
+
+// like post by user
+export async function likePost(postId: string, userId: string) {
+	try {
+		const post = await databases.updateDocument(
+			databaseId,
+			videosCollectionId,
+			postId,
+			{
+				liked: [userId],
+			}
+		);
+		console.log(post);
+
+		return post;
+	} catch (error: any) {
+		console.log(error);
+
+		throw new Error(error);
+	}
+}
+
+// unlike post by user
+export async function unLikePost(postId: string, userId: string) {
+	try {
+		const post = await databases.updateDocument(
+			databaseId,
+			videosCollectionId,
+			postId,
+			{
+				liked: null,
+			}
+		);
+		return post;
+	} catch (error: any) {
+		throw new Error(error);
+	}
+}
+
 // Get video posts created by user
 export async function getUserPosts(userId: string): Promise<IPost[]> {
 	try {

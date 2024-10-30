@@ -10,25 +10,33 @@ import { icons } from '@/constants';
 // Описуємо типи пропсів для компонента
 
 interface AppVideoCardProps {
+	id: string;
 	title: string;
 	thumbnail: string;
 	video: string;
 	creator: string | undefined;
 	avatar: string | undefined;
+	onOpenMenu: (e: string) => void;
 }
 
 const AppVideoCard: React.FC<AppVideoCardProps> = ({
+	id,
 	title,
 	thumbnail,
 	video,
 	creator,
 	avatar,
+	onOpenMenu,
 }) => {
 	const [play, setPlay] = useState(false);
 
+	function handlerOpenMenu() {
+		onOpenMenu(id);
+	}
+
 	return (
 		<View className="flex flex-col items-center px-4 mb-14">
-			<View className="flex flex-row gap-3 items-start">
+			<View className="flex flex-row gap-3 items-center">
 				<View className="flex justify-center items-center flex-row flex-1">
 					{avatar ? (
 						<View className="w-[46px] h-[46px] rounded-md border border-secondary flex justify-center items-center">
@@ -69,9 +77,12 @@ const AppVideoCard: React.FC<AppVideoCardProps> = ({
 						)}
 					</View>
 				</View>
-				<View className="pt-2">
+				<TouchableOpacity
+					onPress={() => handlerOpenMenu()}
+					className="w-6 h-6 p-2 m-3 items-center justify-center"
+				>
 					<Image source={icons.menu} className="w-5 h-5" resizeMode="contain" />
-				</View>
+				</TouchableOpacity>
 			</View>
 			{play ? (
 				<Video

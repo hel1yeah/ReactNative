@@ -6,6 +6,7 @@ import {
 	TouchableOpacity,
 	Image,
 	ActivityIndicator,
+	RefreshControl,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -18,6 +19,8 @@ import TheInfoBox from '@/components/TheInfoBox';
 import { useGlobalContext } from '@/context/GlobalProvider';
 
 import { icons } from '@/constants';
+
+import { useState } from 'react';
 
 export default function TheProfileTab() {
 	const { user, setUser, isLoading, setIsLoggetIn } = useGlobalContext();
@@ -40,24 +43,34 @@ export default function TheProfileTab() {
 		router.replace('/sing_in');
 	}
 
+	const [refreshing, setRefreshing] = useState<boolean>(false);
+
+	async function onRefresh() {
+		setRefreshing(true);
+		await refetch();
+		setRefreshing(false);
+	}
+
 	return (
-		<SafeAreaView className="bg-primary h-full">
+		<SafeAreaView className="bg-primary h-full" edges={['top']}>
 			<FlatList
 				data={posts}
 				keyExtractor={(item) => item.$id}
 				renderItem={({ item }) => (
 					<AppVideoCard
+						id={item.id}
 						title={item.title}
 						thumbnail={item.thumbnail}
 						video={item.video}
 						creator={item?.creator?.username ?? undefined}
 						avatar={item?.creator?.avatar ?? undefined}
+						onOpenMenu={() => {}}
 					/>
 				)}
 				ListHeaderComponent={() => (
 					<View className="w-full justify-center items-center mt-3 mb-8 px-4">
 						<View className="w-full items-end mb-4">
-							{isLoading ? (
+							{loading ? (
 								<ActivityIndicator size="small" color="#FF9C01" />
 							) : (
 								<TouchableOpacity onPress={() => onLogOut()}>
@@ -107,17 +120,20 @@ export default function TheProfileTab() {
 				ListEmptyComponent={() => (
 					<View>
 						{loading ? (
+							<View>
+								<ActivityIndicator size={72} color="#FF9C01" />
+							</View>
+						) : (
 							<AppEmptyState
 								title="No Videos Found"
 								subtitle="No videos found for this search query"
 							/>
-						) : (
-							<View>
-								<ActivityIndicator size={72} color="#FF9C01" />
-							</View>
 						)}
 					</View>
 				)}
+				refreshControl={
+					<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+				}
 			/>
 		</SafeAreaView>
 	);

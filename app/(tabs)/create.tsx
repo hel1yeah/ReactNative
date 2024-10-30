@@ -1,14 +1,8 @@
-import {
-	View,
-	Text,
-	SafeAreaView,
-	ScrollView,
-	TouchableOpacity,
-	Image,
-} from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
 
 // context
 import { useGlobalContext } from '@/context/GlobalProvider';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 // api
 import { createVideoPost } from '@/lib/appwrite';
@@ -121,8 +115,8 @@ const TheCreate = () => {
 		}
 	}
 	return (
-		<SafeAreaView className="bg-primary h-full">
-			<ScrollView className="px-4 my-6">
+		<SafeAreaView className="bg-primary h-full" edges={['top']}>
+			<ScrollView className="px-4">
 				<Text className="text-4xl font-psemibold text-white">Upload Video</Text>
 
 				<AppFormField

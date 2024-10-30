@@ -9,6 +9,7 @@ import AppCustomButton from '@/components/AppCustomButton';
 import images from '../constants/images';
 
 import React from 'react';
+
 export default function App() {
 	const { isLoading, isLoggetIn } = useGlobalContext();
 

@@ -20,17 +20,19 @@ const Search = () => {
 	}, [query]);
 
 	return (
-		<SafeAreaView className="bg-primary h-full">
+		<SafeAreaView className="bg-primary h-full" edges={['top']}>
 			<FlatList
 				data={posts}
 				keyExtractor={(item) => item.$id}
 				renderItem={({ item }) => (
 					<AppVideoCard
+						id={item.id}
 						title={item.title}
 						thumbnail={item.thumbnail}
 						video={item.video}
-						creator={item?.creator ? item?.creator[0]?.username : undefined}
-						avatar={item?.creator ? item?.creator[0]?.avatar : undefined}
+						creator={item?.creator?.username ?? undefined}
+						avatar={item?.creator?.avatar ?? undefined}
+						onOpenMenu={() => {}}
 					/>
 				)}
 				ListHeaderComponent={() => (

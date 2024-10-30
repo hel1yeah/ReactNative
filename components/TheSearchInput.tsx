@@ -33,16 +33,12 @@ const TheSearchInput: React.FC<AppFormFieldProps> = ({ initialQuery }) => {
 	const [query, setQuery] = useState(initialQuery || '');
 	const TIME_DELAY = 1000;
 	useEffect(() => {
-		console.log(query + 1);
-
 		const handler = setTimeout(() => {
-			console.log(query + 2);
-
 			if (query) {
-				console.log(query + 3);
 				onChecked();
 			} else {
-				console.log('No query');
+				return;
+				// console.log('No query');
 			}
 		}, TIME_DELAY);
 
