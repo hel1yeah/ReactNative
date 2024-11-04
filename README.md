@@ -2,6 +2,9 @@
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
+## Figma
+(https://www.figma.com/design/o6xKq25ETLqw5ebqgZonVp/Aora---React-Native-Crash-Course?node-id=0-1&node-type=canvas&t=qsdMhp1MJopzcnHw-0)
+
 ## Get started
 
 1. Install dependencies
